@@ -7,19 +7,16 @@
       content="width=device-width, initial-scale=1.0"
     />
     <title>Ramadan Countdown</title>
-    <!-- Library Three.js & VANTA Background -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js"></script>
-    <!-- Google Fonts -->
+   
     <link
       href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
     />
 
     <style>
-      /* =====================================================
-         GLOBAL STYLE & VARIABLES
-      ====================================================== */
+      
       :root {
         --primary-color: #fff;
         --accent-color: #ffd700;
@@ -41,9 +38,7 @@
         position: relative;
         overflow: hidden;
       }
-      /* =====================================================
-         VANTA & THREE.JS CANVAS
-      ====================================================== */
+    
       #vanta {
         z-index: 0;
         position: absolute;
@@ -52,9 +47,7 @@
         width: 100%;
         height: 100vh;
       }
-      /* =====================================================
-         DEVELOPER CREDITS
-      ====================================================== */
+    
       #dev {
         position: absolute;
         left: 10px;
@@ -71,9 +64,7 @@
       #dev a:hover {
         color: var(--accent-color);
       }
-      /* =====================================================
-         CONTAINER & COMMON UI ELEMENTS
-      ====================================================== */
+      
       .container {
         background: var(--bg-overlay);
         backdrop-filter: blur(15px);
@@ -109,9 +100,7 @@
         color: var(--accent-color);
         transform: rotate(-10deg);
       }
-      /* =====================================================
-         COUNTDOWN STYLE
-      ====================================================== */
+      
       .countdown {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -160,9 +149,7 @@
         font-size: 0.9rem;
         opacity: 0.9;
       }
-      /* =====================================================
-         MESSAGE
-      ====================================================== */
+      
       .message {
         color: var(--primary-color);
         font-size: 1.2rem;
@@ -170,9 +157,7 @@
         text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
         font-weight: 600;
       }
-      /* =====================================================
-         MOON DECORATION
-      ====================================================== */
+     
       .moon {
         position: absolute;
         top: -40px;
@@ -190,9 +175,7 @@
           float 6s ease-in-out infinite;
         box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.5);
       }
-      /* =====================================================
-         PROGRESS BAR STYLE
-      ====================================================== */
+   
       .progress-container {
         margin: 1.5rem 0;
         background: rgba(255, 255, 255, 0.2);
@@ -206,9 +189,7 @@
         background: linear-gradient(45deg, var(--accent-color), #fff);
         transition: width 0.5s ease;
       }
-      /* =====================================================
-         RANDOM QUOTE STYLE
-      ====================================================== */
+     
       #quote {
         font-size: 1rem;
         font-style: italic;
@@ -216,9 +197,7 @@
         margin: 1rem 0;
         padding: 0 1rem;
       }
-      /* =====================================================
-         BUTTON STYLE (MUSIC, SHARE)
-      ====================================================== */
+      
       .btn {
         display: inline-block;
         margin: 0.5rem;
@@ -234,9 +213,7 @@
         background: rgba(0, 0, 0, 0.4);
         transform: scale(1.05);
       }
-      /* =====================================================
-         ANIMATIONS
-      ====================================================== */
+      
       @keyframes shine {
         0% {
           transform: translateX(-100%);
@@ -263,9 +240,7 @@
           transform: translateY(10px);
         }
       }
-      /* =====================================================
-         RESPONSIVE STYLE
-      ====================================================== */
+     
       @media (max-width: 600px) {
         .countdown {
           grid-template-columns: repeat(2, 1fr);
@@ -280,29 +255,29 @@
     </style>
   </head>
   <body>
-    <!-- Developer Credit -->
+    
     <span id="dev">
       developed by <a href="#" target="_blank" rel="noopener noreferrer">irham</a>
     </span>
-    <!-- Vanta & Three.js Background -->
+    
     <div id="vanta"></div>
 
-    <!-- Audio Background (Hidden; aktifkan melalui tombol) -->
+    
     <audio id="bgMusic" loop>
-      <!-- Pastikan src mengarah ke file mp3 yang valid -->
+      
       <source src="bg-music.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
 
-    <!-- Kontainer Utama -->
+   
     <div class="container">
-      <!-- Dekorasi Bulan -->
+      
       <div class="moon"></div>
 
-      <!-- Judul -->
+      
       <h1 class="title">Ramadan Countdown</h1>
 
-      <!-- Countdown Timer -->
+    
       <div class="countdown">
         <div class="countdown-item">
           <div class="number" id="days">00</div>
@@ -322,40 +297,37 @@
         </div>
       </div>
 
-      <!-- Pesan Countdown -->
+     
       <div class="message" id="message">
         Ramadan akan tiba, insyaAllah 28 Februari 2025 🌙 ✨
       </div>
 
-      <!-- Progress Bar -->
+    
       <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
       </div>
 
-      <!-- Random Quote -->
+      
       <p id="quote">
-        <!-- Quote akan dimuat secara acak -->
+       
       </p>
 
-      <!-- Tombol Aksi -->
+     
       <div>
         <button class="btn" id="musicToggle">Play Music</button>
         <button class="btn" id="shareBtn">Share</button>
       </div>
-      <!-- Kontrol Volume -->
+      
       <div style="margin-top: 10px;">
         <label for="volumeControl" style="color: var(--primary-color); margin-right: 8px;">Volume:</label>
         <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5">
       </div>
     </div>
 
-    <!-- SCRIPT -->
+   
     <script>
-      // =====================================================
-      // Inisialisasi VANTA Birds & Animasi Three.js (Cube)
-      // =====================================================
+      
       window.addEventListener("DOMContentLoaded", () => {
-        // Inisialisasi VANTA dengan efek Birds
         VANTA.BIRDS({
           el: "#vanta",
           mouseControls: true,
@@ -373,14 +345,12 @@
           backgroundAlpha: 0.0,
         });
 
-        // Animasi fade-in untuk kontainer utama
         setTimeout(() => {
           const container = document.querySelector(".container");
           container.style.opacity = "1";
           container.style.transform = "translateY(0)";
         }, 500);
 
-        // Inisialisasi Three.js Scene (Cube)
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(
           75,
@@ -390,7 +360,6 @@
         );
         const renderer = new THREE.WebGLRenderer({ alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        // Menambahkan renderer ke dalam elemen #vanta
         document.getElementById("vanta").appendChild(renderer.domElement);
 
         const geometry = new THREE.BoxGeometry();
@@ -411,7 +380,6 @@
         }
         animate();
 
-        // Update ukuran renderer ketika window diresize
         window.addEventListener("resize", () => {
           camera.aspect = window.innerWidth / window.innerHeight;
           camera.updateProjectionMatrix();
@@ -419,10 +387,6 @@
         });
       });
 
-      // =====================================================
-      // Countdown & Progress Bar Update
-      // =====================================================
-      // Definisikan tanggal Ramadan & tanggal mulai progres
       const ramadanDate = new Date("February 28, 2025 00:00:00").getTime();
       const startDate = new Date("January 1, 2025 00:00:00").getTime();
 
@@ -438,19 +402,18 @@
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Update elemen countdown
+        
         document.getElementById("days").textContent = String(days).padStart(2, "0");
         document.getElementById("hours").textContent = String(hours).padStart(2, "0");
         document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
         document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
 
-        // Jika hitung mundur telah selesai
+      
         if (distance < 0) {
           clearInterval(countdownInterval);
           document.getElementById("message").textContent = "Ramadan Mubarak! 🌙";
           document.getElementById("progressBar").style.width = "100%";
         } else {
-          // Update progress bar berdasarkan waktu mulai (startDate) dan ramadanDate
           let totalDuration = ramadanDate - startDate;
           let elapsed = now - startDate;
           if (elapsed < 0) elapsed = 0;
@@ -462,9 +425,7 @@
       const countdownInterval = setInterval(updateCountdown, 1000);
       updateCountdown();
 
-      // =====================================================
-      // Random Ramadan Quote
-      // =====================================================
+     
       const quotes = [
         "Bulan Ramadan adalah waktu rahmat dan pengampunan.",
         "Semoga Ramadan kali ini membawa berkah dan kebahagiaan.",
@@ -480,14 +441,12 @@
       }
       updateQuote();
 
-      // =====================================================
-      // Music Toggle and Volume Control
-      // =====================================================
+    
       const bgMusic = document.getElementById("bgMusic");
       const musicToggle = document.getElementById("musicToggle");
       const volumeControl = document.getElementById("volumeControl");
 
-      // Set default volume
+      
       bgMusic.volume = volumeControl ? volumeControl.value : 0.5;
 
       musicToggle.addEventListener("click", () => {
@@ -509,9 +468,6 @@
         });
       }
 
-      // =====================================================
-      // Social Share Functionality
-      // =====================================================
       const shareBtn = document.getElementById("shareBtn");
       shareBtn.addEventListener("click", async () => {
         const shareData = {
